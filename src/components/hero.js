@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { FaEnvelope, FaPhone, FaLinkedin, FaGithub, FaDownload } from 'react-icons/fa';
+
+const words = ["MCA Student", "Aspiring Full Stack Developer", "Tech Enthusiast"];
 
 const Hero = () => {
-  const words = ["MCA Student", "Aspiring Full Stack Developer", "Tech Enthusiast"];
   const [index, setIndex] = useState(0);
   const [subIndex, setSubIndex] = useState(0);
   const [reverse, setReverse] = useState(false);
