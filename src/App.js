@@ -1,19 +1,12 @@
 import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import './App.css';
 import './components/components.css';
-import Header from './components/header';
-import Hero from './components/hero';
-import About from './components/about';
-import Skills from './components/skills';
-import Education from './components/education';
-import Experience from './components/experience';
-import Projects from './components/projects';
-import Contact from './components/contact';
-import Footer from './components/footer';
-import ScrollToTop from './components/ScrollToTop';
-import Background3D from './components/Background3D';
+import Home from './components/Home';
+import Login from './components/Login';
+import AdminDashboard from './components/AdminDashboard';
 
 function App() {
   useEffect(() => {
@@ -23,20 +16,17 @@ function App() {
       easing: 'ease-out-cubic',
     });
   }, []);
+
   return (
-    <div className="App">
-      <Background3D />
-      <Header />
-      <Hero />
-      <About />
-      <Skills />
-      <Education />
-      <Experience />
-      <Projects />
-      <Contact />
-      <Footer />
-      <ScrollToTop />
-    </div>
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

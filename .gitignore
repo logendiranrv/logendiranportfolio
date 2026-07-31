@@ -21,3 +21,13 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Environment variables - SECRET KEYS (DO NOT COMMIT!)
+.env
+.env.production
+.env.staging
+
+# Theme utility scripts (not needed in production)
+apply-charcoal-theme.js
+replace-theme.js
+remove-green.js

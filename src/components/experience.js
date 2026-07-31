@@ -1,27 +1,54 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaBriefcase } from 'react-icons/fa';
+import { supabase } from '../supabaseClient';
+
+const fallbackExperiences = [
+  {
+    title: 'Python with AI',
+    company: 'CSK Academy, Salem, Tamil Nadu',
+    period: 'Dec 2024',
+    description: 'Worked with Python and AI technologies'
+  },
+  {
+    title: 'Full Stack Development Intern',
+    company: 'CSK Academy, Salem, Tamil Nadu',
+    period: 'Jul 2024',
+    description: 'Gained experience in full stack development'
+  },
+  {
+    title: 'Web Development Intern',
+    company: 'Odugaa Tech, Salem, Tamil Nadu',
+    period: 'Aug 2023',
+    description: 'Completed web development internship'
+  }
+];
 
 const Experience = () => {
-  const experiences = [
-    {
-      title: 'Python with AI',
-      company: 'CSK Academy, Salem, Tamil Nadu',
-      period: 'Dec 2024',
-      description: 'Worked with Python and AI technologies'
-    },
-    {
-      title: 'Full Stack Development Intern',
-      company: 'CSK Academy, Salem, Tamil Nadu',
-      period: 'Jul 2024',
-      description: 'Gained experience in full stack development'
-    },
-    {
-      title: 'Web Development Intern',
-      company: 'Odugaa Tech, Salem, Tamil Nadu',
-      period: 'Aug 2023',
-      description: 'Completed web development internship'
-    }
-  ];
+  const [experiences, setExperiences] = useState([]);
+
+  useEffect(() => {
+    const fetchExperiences = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('experience')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        if (data && data.length > 0) {
+          setExperiences(data);
+        } else {
+          setExperiences(fallbackExperiences);
+        }
+      } catch (err) {
+        console.error('Error fetching experience, loading fallback:', err);
+        setExperiences(fallbackExperiences);
+      }
+    };
+
+    fetchExperiences();
+  }, []);
 
   return (
     <section id="experience" className="experience">
