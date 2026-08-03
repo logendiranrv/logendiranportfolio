@@ -1,87 +1,113 @@
 import React, { useState } from 'react';
-import { FaEnvelope, FaPhone, FaLinkedin, FaGithub, FaPaperPlane, FaDownload } from 'react-icons/fa';
+import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 
 const Contact = () => {
-  const [result, setResult] = useState("");
+  const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [submitted, setSubmitted] = useState(false);
 
-  const onSubmit = async (event) => {
-    event.preventDefault();
-    setResult("Sending...");
-    const formData = new FormData(event.target);
-
-    // Get your free access key from https://web3forms.com/
-    formData.append("access_key", "69bcce73-4986-434d-b3a6-e6844ddacbca");
-
-    try {
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        body: formData
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        setResult("Message Sent Successfully!");
-        event.target.reset();
-        setTimeout(() => setResult(""), 5000); // Clear message after 5 seconds
-      } else {
-        console.log("Error", data);
-        setResult(data.message);
-      }
-    } catch (error) {
-      console.error("Submission failed:", error);
-      setResult("Something went wrong. Please try again later.");
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSubmitted(true);
+    setTimeout(() => {
+      setForm({ name: '', email: '', message: '' });
+      setSubmitted(false);
+    }, 4000);
   };
+
   return (
-    <section id="contact" className="contact">
+    <section id="contact" className="anurag-contact-section">
       <div className="container">
-        <h2 className="section-title">Get In Touch</h2>
-        <div className="contact-container">
-          <div className="contact-form" data-aos="fade-up" style={{ width: '100%' }}>
-            <h3>Send Message</h3>
-            <form onSubmit={onSubmit}>
-              <div className="form-group">
-                <input type="text" name="name" placeholder="Your Name" required />
+        
+        {/* Section Header */}
+        <h2 className="gradient-heading-title" data-aos="fade-up">
+          Contact
+        </h2>
+
+        <div className="anurag-contact-grid" data-aos="fade-up">
+          
+          {/* Left Column: Contact Info */}
+          <div className="contact-info-col">
+            <h3 className="contact-sub-title">Drop me a message</h3>
+            <p className="contact-info-desc">
+              Feel free to reach out if you want to collaborate on a software project, discuss full stack engineering roles, or simply connect.
+            </p>
+
+            <div className="contact-items-list">
+              <div className="contact-item">
+                <div className="contact-icon-bubble">
+                  <FaPhoneAlt />
+                </div>
+                <span>+91 9042978939</span>
               </div>
-              <div className="form-group">
-                <input type="email" name="email" placeholder="Your Email" required />
+
+              <div className="contact-item">
+                <div className="contact-icon-bubble">
+                  <FaEnvelope />
+                </div>
+                <span>logendiranrv@gmail.com</span>
               </div>
-              <div className="form-group">
-                <input type="text" name="subject" placeholder="Subject" required />
+
+              <div className="contact-item">
+                <div className="contact-icon-bubble">
+                  <FaMapMarkerAlt />
+                </div>
+                <span>Tamil Nadu, India</span>
               </div>
-              <div className="form-group">
-                <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
-              </div>
-              <button type="submit" className="btn submit-btn">
-                <FaPaperPlane />
-                Send Message
-              </button>
-            </form>
-            {result && <span className="form-result" style={{ display: 'block', marginTop: '15px', color: result.includes('Success') ? '#4caf50' : '#f44336', fontWeight: '500' }}>{result}</span>}
+            </div>
           </div>
+
+          {/* Right Column: Dark Purple Glass Form Card */}
+          <div className="contact-form-col">
+            <div className="contact-glass-card">
+              {submitted ? (
+                <div className="contact-success-msg">
+                  ✨ Thank you! Your message has been sent successfully.
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="anurag-contact-form">
+                  <div className="form-group-field">
+                    <label>Name</label>
+                    <input
+                      type="text"
+                      placeholder="Your Name"
+                      value={form.name}
+                      onChange={(e) => setForm({ ...form, name: e.target.value })}
+                      required
+                    />
+                  </div>
+
+                  <div className="form-group-field">
+                    <label>Email</label>
+                    <input
+                      type="email"
+                      placeholder="your.email@example.com"
+                      value={form.email}
+                      onChange={(e) => setForm({ ...form, email: e.target.value })}
+                      required
+                    />
+                  </div>
+
+                  <div className="form-group-field">
+                    <label>Message</label>
+                    <textarea
+                      placeholder="How can I help?"
+                      rows="4"
+                      value={form.message}
+                      onChange={(e) => setForm({ ...form, message: e.target.value })}
+                      required
+                    ></textarea>
+                  </div>
+
+                  <button type="submit" className="btn-send-message">
+                    Send message
+                  </button>
+                </form>
+              )}
+            </div>
+          </div>
+
         </div>
-        
-        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '40px' }}>
-          <a href="/resume.pdf" className="btn btn-resume" download data-aos="fade-up">
-            <FaDownload /> Download Resume
-          </a>
-        </div>
-        
-        <div className="social-links-container" data-aos="fade-up" style={{ marginTop: '40px' }}>
-          <a href="mailto:logendiranrv@gmail.com" className="social-link-icon" title="Email">
-            <FaEnvelope />
-          </a>
-          <a href="tel:6833121749" className="social-link-icon" title="Phone">
-            <FaPhone />
-          </a>
-          <a href="https://linkedin.com/in/logendiran-r-24567a295" target="_blank" rel="noopener noreferrer" className="social-link-icon" title="LinkedIn">
-            <FaLinkedin />
-          </a>
-          <a href="https://github.com/logendiranrv" target="_blank" rel="noopener noreferrer" className="social-link-icon" title="GitHub">
-            <FaGithub />
-          </a>
-        </div>
+
       </div>
     </section>
   );

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
+import { onAuthChanged, logOut, ADMIN_EMAIL } from '../firebase';
 import { 
   FaSignOutAlt, FaBriefcase, FaGraduationCap, 
   FaCode, FaCertificate, FaPlus, FaTrash, 
@@ -23,23 +24,23 @@ const AdminDashboard = () => {
 
   // Form States
   const [editingId, setEditingId] = useState(null);
-  const [projectForm, setProjectForm] = useState({ title: '', description: '', technologies: '', features: '', aim: '' });
+  const [projectForm, setProjectForm] = useState({ title: '', description: '', technologies: '', features: '', aim: '', demo: '', github: '', image: '' });
   const [educationForm, setEducationForm] = useState({ degree: '', institution: '', year: '', description: '' });
   const [experienceForm, setExperienceForm] = useState({ title: '', company: '', period: '', description: '' });
-  const [certificateForm, setCertificateForm] = useState({ name: '', issuer: '', issue_date: '', credential_url: '' });
+  const [certificateForm, setCertificateForm] = useState({ name: '', issuer: '', issue_date: '', credential_url: '', image_url: '' });
 
-  // Get user session & check auth
+  // Get user session & check auth via Firebase Auth
   useEffect(() => {
-    const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
+    const unsubscribe = onAuthChanged((currentUser) => {
+      if (!currentUser || currentUser.email !== ADMIN_EMAIL) {
         navigate('/login');
       } else {
-        setUser(session.user);
+        setUser(currentUser);
         fetchData();
       }
-    };
-    checkAuth();
+    });
+
+    return () => unsubscribe();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigate]);
 
@@ -75,7 +76,7 @@ const AdminDashboard = () => {
   };
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    await logOut();
     navigate('/login');
   };
 
@@ -104,6 +105,9 @@ const AdminDashboard = () => {
         technologies: techArray,
         features: featureArray,
         aim: projectForm.aim,
+        demo: projectForm.demo,
+        github: projectForm.github,
+        image: projectForm.image,
       };
 
       if (editingId) {
@@ -116,7 +120,7 @@ const AdminDashboard = () => {
         showFeedback('Project created successfully!');
       }
 
-      setProjectForm({ title: '', description: '', technologies: '', features: '', aim: '' });
+      setProjectForm({ title: '', description: '', technologies: '', features: '', aim: '', demo: '', github: '', image: '' });
       setEditingId(null);
       fetchData();
     } catch (err) {
@@ -134,6 +138,9 @@ const AdminDashboard = () => {
       technologies: proj.technologies ? proj.technologies.join(', ') : '',
       features: proj.features ? proj.features.join('\n') : '',
       aim: proj.aim || '',
+      demo: proj.demo || '',
+      github: proj.github || '',
+      image: proj.image || '',
     });
   };
 
@@ -264,7 +271,7 @@ const AdminDashboard = () => {
         if (error) throw error;
         showFeedback('Certificate created!');
       }
-      setCertificateForm({ name: '', issuer: '', issue_date: '', credential_url: '' });
+      setCertificateForm({ name: '', issuer: '', issue_date: '', credential_url: '', image_url: '' });
       setEditingId(null);
       fetchData();
     } catch (err) {
@@ -281,6 +288,7 @@ const AdminDashboard = () => {
       issuer: cert.issuer,
       issue_date: cert.issue_date,
       credential_url: cert.credential_url || '',
+      image_url: cert.image_url || '',
     });
   };
 
@@ -301,10 +309,10 @@ const AdminDashboard = () => {
 
   const cancelEditing = () => {
     setEditingId(null);
-    setProjectForm({ title: '', description: '', technologies: '', features: '', aim: '' });
+    setProjectForm({ title: '', description: '', technologies: '', features: '', aim: '', demo: '', github: '', image: '' });
     setEducationForm({ degree: '', institution: '', year: '', description: '' });
     setExperienceForm({ title: '', company: '', period: '', description: '' });
-    setCertificateForm({ name: '', issuer: '', issue_date: '', credential_url: '' });
+    setCertificateForm({ name: '', issuer: '', issue_date: '', credential_url: '', image_url: '' });
   };
 
   return (
@@ -411,10 +419,24 @@ const AdminDashboard = () => {
                       style={styles.input}
                     />
                     <input 
-                      type="text" 
-                      placeholder="Project Aim"
-                      value={projectForm.aim}
-                      onChange={(e) => setProjectForm({ ...projectForm, aim: e.target.value })}
+                      type="url" 
+                      placeholder="Live Demo URL (e.g. https://myproject.com)"
+                      value={projectForm.demo}
+                      onChange={(e) => setProjectForm({ ...projectForm, demo: e.target.value })}
+                      style={styles.input}
+                    />
+                    <input 
+                      type="url" 
+                      placeholder="GitHub URL (e.g. https://github.com/logendiranrv/repo)"
+                      value={projectForm.github}
+                      onChange={(e) => setProjectForm({ ...projectForm, github: e.target.value })}
+                      style={styles.input}
+                    />
+                    <input 
+                      type="url" 
+                      placeholder="Project Image URL (e.g. https://images.unsplash.com/...)"
+                      value={projectForm.image}
+                      onChange={(e) => setProjectForm({ ...projectForm, image: e.target.value })}
                       style={styles.input}
                     />
                     
@@ -549,6 +571,13 @@ const AdminDashboard = () => {
                       placeholder="Credential URL (Optional)"
                       value={certificateForm.credential_url}
                       onChange={(e) => setCertificateForm({ ...certificateForm, credential_url: e.target.value })}
+                      style={styles.input}
+                    />
+                    <input 
+                      type="url" 
+                      placeholder="Certificate Image URL (Optional)"
+                      value={certificateForm.image_url}
+                      onChange={(e) => setCertificateForm({ ...certificateForm, image_url: e.target.value })}
                       style={styles.input}
                     />
                     

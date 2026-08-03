@@ -1,13 +1,99 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg-main: #0d061a;
+  --bg-card: rgba(25, 12, 52, 0.65);
+  --bg-darker: #07030e;
+  --gradient-title: linear-gradient(135deg, #00e5ff 0%, #a200ff 50%, #f72585 100%);
+  --gradient-btn: linear-gradient(135deg, #00d2ff 0%, #9d4edd 100%);
+  --gradient-btn-hover: linear-gradient(135deg, #00e5ff 0%, #b5179e 100%);
+  --accent-cyan: #00e5ff;
+  --accent-purple: #9d4edd;
+  --text-primary: #ffffff;
+  --text-secondary: #a399b8;
+  --border-subtle: rgba(157, 78, 221, 0.2);
+  --border-purple-glow: rgba(162, 0, 255, 0.4);
+
+  --font-heading: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg-main);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  line-height: 1.6;
+}
+
+body {
+  overflow-x: hidden;
+  background-color: var(--bg-main);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+code, pre, .font-mono {
+  font-family: var(--font-mono);
+}
+
+.container {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+section {
+  padding: 6rem 0;
+}
+
+/* GRADIENT TEXT TITLES */
+.gradient-heading-title {
+  font-size: clamp(2.5rem, 5vw, 3.8rem);
+  font-weight: 800;
+  background: var(--gradient-title);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.section-desc-center {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-main);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3c1e6e;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-cyan);
 }

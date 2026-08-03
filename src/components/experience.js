@@ -1,76 +1,80 @@
-import React, { useState, useEffect } from 'react';
-import { FaBriefcase } from 'react-icons/fa';
-import { supabase } from '../supabaseClient';
+import React from 'react';
+import { FaBriefcase, FaGraduationCap, FaCode } from 'react-icons/fa';
 
-const fallbackExperiences = [
+const timelineItems = [
   {
-    title: 'Python with AI',
-    company: 'CSK Academy, Salem, Tamil Nadu',
-    period: 'Dec 2024',
-    description: 'Worked with Python and AI technologies'
+    type: "Internship",
+    icon: <FaBriefcase />,
+    title: "Web Development & AI Intern",
+    organization: "Tech Innovation Labs",
+    duration: "June 2024 – August 2024",
+    description: "Built responsive frontend UI components using React and Tailwind CSS. Developed Python backend microservices for AI text parsing and integrated REST API endpoints.",
   },
   {
-    title: 'Full Stack Development Intern',
-    company: 'CSK Academy, Salem, Tamil Nadu',
-    period: 'Jul 2024',
-    description: 'Gained experience in full stack development'
+    type: "College Projects",
+    icon: <FaGraduationCap />,
+    title: "College Bus Management System",
+    organization: "Nehru Institute of Information Technology",
+    duration: "January 2024 – April 2024",
+    description: "Engineered an enterprise fleet management and student registration system using Java, MySQL, HTML, and CSS. Optimized route scheduling queries for over 1,200 students.",
   },
   {
-    title: 'Web Development Intern',
-    company: 'Odugaa Tech, Salem, Tamil Nadu',
-    period: 'Aug 2023',
-    description: 'Completed web development internship'
-  }
+    type: "Personal Projects",
+    icon: <FaCode />,
+    title: "Full Stack & AI Web Applications",
+    organization: "Independent Development",
+    duration: "2023 – Present",
+    description: "Designed and deployed multiple production-ready full-stack applications including Clinic Booking Portals and RAG Document Search engines using the MERN stack and Python.",
+  },
 ];
 
 const Experience = () => {
-  const [experiences, setExperiences] = useState([]);
-
-  useEffect(() => {
-    const fetchExperiences = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('experience')
-          .select('*')
-          .order('created_at', { ascending: false });
-
-        if (error) throw error;
-
-        if (data && data.length > 0) {
-          setExperiences(data);
-        } else {
-          setExperiences(fallbackExperiences);
-        }
-      } catch (err) {
-        console.error('Error fetching experience, loading fallback:', err);
-        setExperiences(fallbackExperiences);
-      }
-    };
-
-    fetchExperiences();
-  }, []);
-
   return (
-    <section id="experience" className="experience">
+    <section id="experience" className="experience-minimal-section">
       <div className="container">
-        <h2 className="section-title">Work Experience</h2>
-        <div className="experience-grid">
-          {experiences.map((exp, index) => (
-            <div key={index} className="experience-card" data-aos="fade-up" data-aos-delay={index * 100}>
-              <div className="experience-header">
-                <div className="experience-icon">
-                  <FaBriefcase />
-                </div>
-                <div className="experience-title">
-                  <h3>{exp.title}</h3>
-                  <p className="company">{exp.company}</p>
-                </div>
-                <span className="period">{exp.period}</span>
-              </div>
-              <p className="experience-description">{exp.description}</p>
-            </div>
-          ))}
+        
+        {/* Section Header */}
+        <div className="section-header-minimal" data-aos="fade-up">
+          <span className="section-label">04. EXPERIENCE & TRACK RECORD</span>
+          <h2 className="section-title-minimal">Career & Projects Timeline</h2>
+          <p className="section-desc-minimal">
+            A chronological timeline of my professional internships, academic projects, and hands-on software development experience.
+          </p>
         </div>
+
+        {/* Timeline Container */}
+        <div className="minimal-timeline-wrapper">
+          <div className="timeline-spine"></div>
+          
+          <div className="timeline-items-list">
+            {timelineItems.map((item, idx) => (
+              <div
+                key={idx}
+                className="timeline-item-minimal"
+                data-aos="fade-up"
+                data-aos-delay={idx * 100}
+              >
+                <div className="timeline-node-icon">
+                  {item.icon}
+                </div>
+
+                <div className="timeline-content-card">
+                  <div className="timeline-meta-row">
+                    <span className="timeline-type-pill">{item.type}</span>
+                    <span className="timeline-duration">{item.duration}</span>
+                  </div>
+
+                  <h3 className="timeline-item-title">{item.title}</h3>
+                  <div className="timeline-org-name">{item.organization}</div>
+
+                  <p className="timeline-item-desc">{item.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+        </div>
+
       </div>
     </section>
   );

@@ -1,13 +1,46 @@
 import React from 'react';
+import { FaGithub, FaTwitter, FaLinkedin } from 'react-icons/fa';
 
 const Footer = () => {
-  const currentYear = new Date().getFullYear();
-
   return (
-    <footer className="footer">
+    <footer className="anurag-footer">
       <div className="container">
-        <div className="footer-bottom" style={{ borderTop: 'none', paddingTop: 0 }}>
-          <p>&copy; {currentYear} Logendiran R. All Rights Reserved.</p>
+        <div className="footer-content-row">
+          
+          <div className="footer-copyright">
+            2026 • Logendiran R, All rights reserved
+          </div>
+
+          <div className="footer-social-icons">
+            <a
+              href="https://github.com/logendiranrv"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer-social-link"
+              aria-label="GitHub"
+            >
+              <FaGithub />
+            </a>
+            <a
+              href="https://twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer-social-link"
+              aria-label="Twitter"
+            >
+              <FaTwitter />
+            </a>
+            <a
+              href="https://linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer-social-link"
+              aria-label="LinkedIn"
+            >
+              <FaLinkedin />
+            </a>
+          </div>
+
         </div>
       </div>
     </footer>
