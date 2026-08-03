@@ -14,31 +14,29 @@ const Background3D = () => {
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
-    // 3D Particles settings
-    const particleCount = 70;
-    const particles = [];
-    const focalLength = 400; // perspective focal length
-    const maxDistance = 120; // max distance to draw connection line
+    // Mouse coordinates tracking
+    const mouse = {
+      x: -1000,
+      y: -1000,
+      targetX: -1000,
+      targetY: -1000,
+      radius: 150,
+      active: false,
+    };
 
-    // Target rotation angles for mouse interaction
-    let angleX = 0.001;
-    let angleY = 0.001;
-    let targetAngleX = 0.001;
-    let targetAngleY = 0.001;
+    // Minimal, slow-moving node constellation
+    const nodeCount = Math.min(40, Math.floor((width * height) / 30000));
+    const nodes = [];
+    const maxDistance = 130;
 
-    // Initialize 3D particles in a cube coordinates space
-    for (let i = 0; i < particleCount; i++) {
-      particles.push({
-        x: (Math.random() - 0.5) * 800,
-        y: (Math.random() - 0.5) * 800,
-        z: (Math.random() - 0.5) * 800,
-        baseX: 0,
-        baseY: 0,
-        baseZ: 0,
+    for (let i = 0; i < nodeCount; i++) {
+      nodes.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.35, // Very slow, subtle drift
+        vy: (Math.random() - 0.5) * 0.35,
+        radius: Math.random() * 1.5 + 1,
       });
-      particles[i].baseX = particles[i].x;
-      particles[i].baseY = particles[i].y;
-      particles[i].baseZ = particles[i].z;
     }
 
     const handleResize = () => {
@@ -47,115 +45,123 @@ const Background3D = () => {
     };
 
     const handleMouseMove = (e) => {
-      // Calculate rotation based on mouse coordinates from screen center
-      const ndcX = (e.clientX - window.innerWidth / 2) / (window.innerWidth / 2);
-      const ndcY = (e.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
-      targetAngleY = ndcX * 0.005;
-      targetAngleX = ndcY * 0.005;
+      mouse.targetX = e.clientX;
+      mouse.targetY = e.clientY;
+      mouse.active = true;
+    };
+
+    const handleMouseLeave = () => {
+      mouse.active = false;
     };
 
     window.addEventListener('resize', handleResize);
     window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseleave', handleMouseLeave);
 
-    // Helper functions for 3D rotation
-    const rotateX = (point, angle) => {
-      const cos = Math.cos(angle);
-      const sin = Math.sin(angle);
-      const y1 = point.y * cos - point.z * sin;
-      const z1 = point.z * cos + point.y * sin;
-      point.y = y1;
-      point.z = z1;
-    };
+    // Render Decent & Clean Graph Grid
+    const drawDecentGrid = () => {
+      const gridSize = 70;
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.025)';
 
-    const rotateY = (point, angle) => {
-      const cos = Math.cos(angle);
-      const sin = Math.sin(angle);
-      const x1 = point.x * cos - point.z * sin;
-      const z1 = point.z * cos + point.x * sin;
-      point.x = x1;
-      point.z = z1;
-    };
-
-    // Main animation loop
-    const animate = () => {
-      ctx.clearRect(0, 0, width, height);
-
-      // Smoothly interpolate current angle toward target angle (dampening)
-      angleX += (targetAngleX - angleX) * 0.05;
-      angleY += (targetAngleY - angleY) * 0.05;
-
-      // Add a constant subtle rotation so it moves even without mouse action
-      const currentRotationX = angleX + 0.0005;
-      const currentRotationY = angleY + 0.001;
-
-      const projected = [];
-
-      // Rotate and project particles
-      for (let i = 0; i < particleCount; i++) {
-        const p = particles[i];
-
-        // Apply 3D rotations
-        rotateX(p, currentRotationX);
-        rotateY(p, currentRotationY);
-
-        // Perspective Projection calculation
-        const scale = focalLength / (focalLength + p.z);
-        const x2d = p.x * scale + width / 2;
-        const y2d = p.y * scale + height / 2;
-
-        projected.push({ x: x2d, y: y2d, z: p.z, scale });
+      // Vertical grid lines
+      for (let x = 0; x < width; x += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, height);
+        ctx.stroke();
       }
 
-      // Draw Connection Lines between close particles
-      for (let i = 0; i < particleCount; i++) {
-        for (let j = i + 1; j < particleCount; j++) {
-          const p1 = projected[i];
-          const p2 = projected[j];
+      // Horizontal grid lines
+      for (let y = 0; y < height; y += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(width, y);
+        ctx.stroke();
+      }
 
-          const dx = p1.x - p2.x;
-          const dy = p1.y - p2.y;
+      // Draw subtle coordinate crosshair ticks (+) at grid intersections
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+      ctx.font = '9px monospace';
+      for (let x = gridSize; x < width; x += gridSize * 2) {
+        for (let y = gridSize; y < height; y += gridSize * 2) {
+          ctx.fillText('+', x - 3, y + 3);
+        }
+      }
+    };
+
+    // Render Decent Subtle Graph Network
+    const drawDecentNodes = () => {
+      // Smooth mouse interpolation
+      if (mouse.active) {
+        mouse.x += (mouse.targetX - mouse.x) * 0.08;
+        mouse.y += (mouse.targetY - mouse.y) * 0.08;
+      }
+
+      // Update node positions
+      nodes.forEach((node) => {
+        node.x += node.vx;
+        node.y += node.vy;
+
+        // Soft bounce at boundaries
+        if (node.x < 0 || node.x > width) node.vx *= -1;
+        if (node.y < 0 || node.y > height) node.vy *= -1;
+      });
+
+      // Draw subtle connection lines between nodes
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const n1 = nodes[i];
+          const n2 = nodes[j];
+          const dx = n1.x - n2.x;
+          const dy = n1.y - n2.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
 
           if (dist < maxDistance) {
-            // Lines are more transparent if they are further back (z > 0)
-            const zDepth = (p1.z + p2.z) / 2;
-            const depthAlpha = Math.max(0.1, 1 - (zDepth + 400) / 800);
-            const distAlpha = 1 - dist / maxDistance;
-            const alpha = distAlpha * depthAlpha * 0.25;
-
+            const alpha = (1 - dist / maxDistance) * 0.15;
             ctx.beginPath();
-            ctx.moveTo(p1.x, p1.y);
-            ctx.lineTo(p2.x, p2.y);
-            // Professional neon green line matching the theme
-            ctx.strokeStyle = `rgba(59, 130, 246, ${alpha})`;
-            ctx.lineWidth = Math.min(1.2, p1.scale * 0.8);
+            ctx.moveTo(n1.x, n1.y);
+            ctx.lineTo(n2.x, n2.y);
+            ctx.strokeStyle = `rgba(147, 197, 253, ${alpha})`;
+            ctx.lineWidth = 1;
             ctx.stroke();
           }
         }
       }
 
-      // Draw projected 3D dots
-      for (let i = 0; i < particleCount; i++) {
-        const p = projected[i];
-        if (p.x < 0 || p.x > width || p.y < 0 || p.y > height) continue;
-
-        // Size and brightness depends on 3D depth (scale)
-        const size = Math.max(0.5, p.scale * 2.2);
-        const alpha = Math.max(0.15, Math.min(0.85, p.scale * 0.6));
-
-        // Drawing outer neon glow for close particles
-        if (p.scale > 1.2) {
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, size * 2.5, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(96, 165, 250, ${alpha * 0.2})`;
-          ctx.fill();
-        }
-
+      // Draw soft node dots
+      nodes.forEach((node) => {
         ctx.beginPath();
-        ctx.arc(p.x, p.y, size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(59, 130, 246, ${alpha})`;
+        ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(147, 197, 253, 0.4)';
         ctx.fill();
+      });
+
+      // Subtle mouse interaction lines
+      if (mouse.active) {
+        nodes.forEach((node) => {
+          const dx = mouse.x - node.x;
+          const dy = mouse.y - node.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < mouse.radius) {
+            const alpha = (1 - dist / mouse.radius) * 0.18;
+            ctx.beginPath();
+            ctx.moveTo(mouse.x, mouse.y);
+            ctx.lineTo(node.x, node.y);
+            ctx.strokeStyle = `rgba(59, 130, 246, ${alpha})`;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+          }
+        });
       }
+    };
+
+    // Animation Loop
+    const animate = () => {
+      ctx.clearRect(0, 0, width, height);
+
+      drawDecentGrid();
+      drawDecentNodes();
 
       animationFrameId = requestAnimationFrame(animate);
     };
@@ -165,6 +171,7 @@ const Background3D = () => {
     return () => {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseleave', handleMouseLeave);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
