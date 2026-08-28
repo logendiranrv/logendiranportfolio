@@ -3265,36 +3265,58 @@
   }
 }
 
-/* TOUCHABLE ULTRA-PREMIUM CARD */
+/* TOUCHABLE ULTRA-PREMIUM RICH CARD */
 .cert-card-touchable {
-  flex: 0 0 350px;
-  width: 350px;
-  background: rgba(20, 20, 35, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 24px;
+  flex: 0 0 360px;
+  width: 360px;
+  background: linear-gradient(145deg, rgba(26, 14, 50, 0.88) 0%, rgba(12, 6, 28, 0.95) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 26px;
   overflow: hidden;
-  backdrop-filter: blur(16px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   display: flex;
   flex-direction: column;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15);
   cursor: pointer;
   position: relative;
 }
 
+.cert-card-touchable::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(0, 210, 255, 0.2) 0%, rgba(157, 78, 237, 0.15) 50%, transparent 80%);
+  filter: blur(40px);
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  opacity: 0.6;
+}
+
+.cert-card-touchable:hover::before {
+  opacity: 1;
+}
+
 .cert-card-touchable:hover,
 .cert-card-touchable:active {
-  transform: translateY(-10px) scale(1.02);
-  border-color: rgba(0, 210, 255, 0.45);
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 25px rgba(157, 78, 237, 0.35), 0 0 15px rgba(0, 210, 255, 0.25);
+  transform: translateY(-12px) scale(1.025);
+  border-color: rgba(0, 210, 255, 0.65);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 35px rgba(0, 210, 255, 0.35), 0 0 25px rgba(157, 78, 237, 0.4);
 }
 
 .cert-img-wrapper {
-  width: 100%;
-  height: 200px;
+  width: calc(100% - 24px);
+  height: 205px;
+  margin: 12px 12px 0 12px;
+  border-radius: 18px;
   position: relative;
   overflow: hidden;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .cert-img {
@@ -3302,23 +3324,23 @@
   height: 100%;
   object-fit: cover;
   object-position: top;
-  transition: transform 0.5s ease;
+  transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 .cert-card-touchable:hover .cert-img {
-  transform: scale(1.08);
+  transform: scale(1.1);
 }
 
 .cert-img-overlay-hover {
   position: absolute;
   inset: 0;
-  background: rgba(10, 10, 25, 0.55);
-  backdrop-filter: blur(3px);
+  background: linear-gradient(180deg, rgba(10, 5, 25, 0.2) 0%, rgba(10, 5, 25, 0.75) 100%);
+  backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.35s ease;
 }
 
 .cert-card-touchable:hover .cert-img-overlay-hover {
@@ -3326,20 +3348,21 @@
 }
 
 .cert-expand-pill {
-  padding: 0.5rem 1.2rem;
-  background: rgba(0, 210, 255, 0.95);
-  color: #000000;
+  padding: 0.6rem 1.4rem;
+  background: linear-gradient(135deg, #00d2ff 0%, #9d4edd 100%);
+  color: #ffffff;
   font-weight: 700;
-  font-size: 0.82rem;
-  border-radius: 20px;
+  font-size: 0.85rem;
+  border-radius: 25px;
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  box-shadow: 0 4px 15px rgba(0, 210, 255, 0.4);
+  gap: 0.5rem;
+  box-shadow: 0 6px 20px rgba(0, 210, 255, 0.5);
+  letter-spacing: 0.03em;
 }
 
 .cert-card-content {
-  padding: 1.5rem;
+  padding: 1.4rem 1.5rem 1.5rem 1.5rem;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -3349,38 +3372,42 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.9rem;
 }
 
 .cert-badge-icon {
-  font-size: 1.4rem;
-  color: #ffb703;
-  filter: drop-shadow(0 0 8px rgba(255, 183, 3, 0.6));
+  font-size: 1.5rem;
+  color: #ffc107;
+  filter: drop-shadow(0 0 10px rgba(255, 193, 7, 0.7));
 }
 
 .cert-year-pill {
-  padding: 0.25rem 0.75rem;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 12px;
-  font-size: 0.78rem;
+  padding: 0.3rem 0.85rem;
+  background: rgba(0, 210, 255, 0.1);
+  border: 1px solid rgba(0, 210, 255, 0.3);
+  border-radius: 14px;
+  font-size: 0.8rem;
   color: #00d2ff;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  box-shadow: 0 2px 10px rgba(0, 210, 255, 0.15);
 }
 
 .cert-title-minimal {
-  font-size: 1.15rem;
-  font-weight: 700;
+  font-size: 1.18rem;
+  font-weight: 800;
   color: #ffffff;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.6rem;
   line-height: 1.35;
+  letter-spacing: -0.01em;
 }
 
 .cert-org-minimal {
   font-size: 0.88rem;
-  color: rgba(255, 255, 255, 0.65);
-  margin-bottom: 1.4rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 1.5rem;
   flex-grow: 1;
+  line-height: 1.4;
 }
 
 .cert-actions-row {
@@ -3392,38 +3419,43 @@
 .btn-cert-link,
 .btn-cert-preview {
   flex: 1;
-  padding: 0.6rem 0.8rem;
-  font-size: 0.82rem;
-  font-weight: 600;
-  border-radius: 12px;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.84rem;
+  font-weight: 700;
+  border-radius: 14px;
   text-decoration: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
-  transition: all 0.3s ease;
+  gap: 0.45rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
 }
 
 .btn-cert-link {
-  background: rgba(0, 210, 255, 0.12);
-  border: 1px solid rgba(0, 210, 255, 0.3);
+  background: linear-gradient(135deg, rgba(0, 210, 255, 0.2) 0%, rgba(157, 78, 237, 0.2) 100%);
+  border: 1px solid rgba(0, 210, 255, 0.45);
   color: #00d2ff;
+  box-shadow: 0 4px 15px rgba(0, 210, 255, 0.15);
 }
 
 .btn-cert-link:hover {
-  background: #00d2ff;
-  color: #000000;
-  box-shadow: 0 5px 15px rgba(0, 210, 255, 0.35);
+  background: linear-gradient(135deg, #00d2ff 0%, #9d4edd 100%);
+  border-color: transparent;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(0, 210, 255, 0.45);
 }
 
 .btn-cert-preview {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   color: #ffffff;
 }
 
 .btn-cert-preview:hover {
-  background: rgba(255, 255, 255, 0.18);
-  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.15);
 }
