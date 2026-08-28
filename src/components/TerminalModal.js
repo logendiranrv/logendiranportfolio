@@ -90,7 +90,7 @@ const TerminalModal = ({ isOpen, onClose }) => {
 
   const downloadResume = () => {
     const link = document.createElement('a');
-    link.href = '/resume.pdf';
+    link.href = '/Logendiran_R_Resume.pdf';
     link.target = '_blank';
     link.download = 'Logendiran_R_Resume.pdf';
     document.body.appendChild(link);

@@ -30,7 +30,7 @@ const Hero = () => {
                 Contact
               </a>
               <a 
-                href="/resume.pdf" 
+                href="/Logendiran_R_Resume.pdf" 
                 download="Logendiran_R_Resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
