@@ -55,6 +55,8 @@ const fallbackCertificates = [
 ];
 
 const Certificates = () => {
+  const [certs, setCerts] = useState([]);
+  const [selectedCert, setSelectedCert] = useState(null);
   const [isPaused, setIsPaused] = useState(false);
   const marqueeRef = useRef(null);
 
