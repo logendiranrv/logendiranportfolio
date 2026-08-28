@@ -57,11 +57,9 @@ const Projects = () => {
           A collection of projects I've worked on.
         </p>
 
-        {/* Alternating Zig-Zag Projects List */}
+        {/* Recent Work Projects List */}
         <div className="recent-work-list">
           {projects.map((proj, idx) => {
-            const isEven = idx % 2 === 0;
-
             return (
               <div
                 key={idx}
