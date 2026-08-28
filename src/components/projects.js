@@ -65,7 +65,7 @@ const Projects = () => {
             return (
               <div
                 key={idx}
-                className={`recent-work-row ${isEven ? 'row-normal' : 'row-reverse'}`}
+                className="recent-work-row"
                 data-aos="fade-up"
               >
                 {/* Text Content Block */}
@@ -76,6 +76,25 @@ const Projects = () => {
                   <div className="work-description-card">
                     {proj.description}
                   </div>
+
+                  {/* Tech Tags */}
+                  {proj.technologies && proj.technologies.length > 0 && (
+                    <div className="work-tech-tags" style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap', marginTop: '1.2rem', marginBottom: '1.2rem' }}>
+                      {proj.technologies.map((tech, tIdx) => (
+                        <span key={tIdx} style={{
+                          padding: '0.35rem 0.85rem',
+                          background: 'rgba(0, 210, 255, 0.08)',
+                          border: '1px solid rgba(0, 210, 255, 0.25)',
+                          color: '#00d2ff',
+                          borderRadius: '20px',
+                          fontSize: '0.85rem',
+                          fontWeight: '600'
+                        }}>
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  )}
 
                   {/* Social / Action Links */}
                   <div className="work-actions-flex">
@@ -102,7 +121,7 @@ const Projects = () => {
                       </a>
                     )}
                     <a
-                      href="https://linkedin.com"
+                      href="https://linkedin.com/in/logendiran-r-24567a295"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="work-action-icon"
@@ -110,17 +129,6 @@ const Projects = () => {
                     >
                       <FaLinkedin />
                     </a>
-                  </div>
-                </div>
-
-                {/* Image Preview Block */}
-                <div className="work-image-block">
-                  <div className="work-image-frame">
-                    <img
-                      src={proj.image || "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80"}
-                      alt={proj.title}
-                      className="work-preview-img"
-                    />
                   </div>
                 </div>
 

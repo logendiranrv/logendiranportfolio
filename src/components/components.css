@@ -677,23 +677,19 @@
 }
 
 .recent-work-row {
-  display: grid;
-  grid-template-columns: 1fr 1.1fr;
-  gap: 2.5rem;
-  align-items: center;
+  display: block;
   position: relative;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 2.5rem;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
 }
 
-.recent-work-row.row-reverse {
-  grid-template-columns: 1.1fr 1fr;
-}
-
-.recent-work-row.row-reverse .work-text-block {
-  order: 2;
-}
-
-.recent-work-row.row-reverse .work-image-block {
-  order: 1;
+.recent-work-row:hover {
+  border-color: rgba(0, 210, 255, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 210, 255, 0.1);
 }
 
 .work-text-block {
