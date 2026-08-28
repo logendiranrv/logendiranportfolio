@@ -1,13 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   FaAward, 
   FaExternalLinkAlt, 
   FaTimes, 
-  FaImage,
-  FaChevronLeft,
-  FaChevronRight,
-  FaPause,
-  FaPlay
+  FaImage
 } from 'react-icons/fa';
 import { supabase } from '../supabaseClient';
 
@@ -57,8 +53,6 @@ const fallbackCertificates = [
 const Certificates = () => {
   const [certs, setCerts] = useState([]);
   const [selectedCert, setSelectedCert] = useState(null);
-  const [isPaused, setIsPaused] = useState(false);
-  const marqueeRef = useRef(null);
 
   useEffect(() => {
     const fetchCertificates = async () => {
@@ -84,58 +78,22 @@ const Certificates = () => {
   // Double certificates array for infinite smooth marquee track
   const displayCerts = certs.length > 0 ? [...certs, ...certs] : [...fallbackCertificates, ...fallbackCertificates];
 
-  const scrollTrack = (direction) => {
-    if (marqueeRef.current) {
-      const scrollAmount = direction === 'left' ? -360 : 360;
-      marqueeRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    }
-  };
-
   return (
     <section id="certifications" className="certifications-minimal-section">
       <div className="container">
         
-        {/* Section Header & Controls */}
-        <div className="cert-controls-wrapper" data-aos="fade-up">
-          <div className="section-header-minimal" style={{ marginBottom: 0 }}>
-            <span className="section-label">05. CREDENTIALS</span>
-            <h2 className="section-title-minimal">Certifications & Training</h2>
-            <p className="section-desc-minimal">
-              Verified certifications and technical training completed during my MCA and software development journey.
-            </p>
-          </div>
-
-          <div className="cert-nav-buttons">
-            <button 
-              className="cert-nav-btn"
-              onClick={() => setIsPaused(!isPaused)}
-              title={isPaused ? "Resume Auto Scroll" : "Pause Auto Scroll"}
-            >
-              {isPaused ? <FaPlay size={14} /> : <FaPause size={14} />}
-            </button>
-            <button 
-              className="cert-nav-btn"
-              onClick={() => scrollTrack('left')}
-              title="Scroll Left"
-            >
-              <FaChevronLeft size={16} />
-            </button>
-            <button 
-              className="cert-nav-btn"
-              onClick={() => scrollTrack('right')}
-              title="Scroll Right"
-            >
-              <FaChevronRight size={16} />
-            </button>
-          </div>
+        {/* Section Header */}
+        <div className="section-header-minimal" data-aos="fade-up">
+          <span className="section-label">05. CREDENTIALS</span>
+          <h2 className="section-title-minimal">Certifications & Training</h2>
+          <p className="section-desc-minimal">
+            Verified certifications and technical training completed during my MCA and software development journey.
+          </p>
         </div>
 
         {/* Certifications Infinite Running Marquee Track */}
         <div className="cert-marquee-container" data-aos="fade-up">
-          <div 
-            ref={marqueeRef}
-            className={`cert-marquee-track ${isPaused ? 'is-paused' : ''}`}
-          >
+          <div className="cert-marquee-track">
             {displayCerts.map((cert, idx) => (
               <div
                 key={idx}
