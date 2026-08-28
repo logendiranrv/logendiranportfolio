@@ -1,30 +1,30 @@
 import React from 'react';
-import { FaBriefcase, FaGraduationCap, FaCode } from 'react-icons/fa';
+import { FaBriefcase, FaCode } from 'react-icons/fa';
 
 const timelineItems = [
   {
+    type: "Training",
+    icon: <FaCode />,
+    title: "Python with AI",
+    organization: "CSK Academy, Salem, Tamil Nadu",
+    duration: "Dec 2024",
+    description: "Completed training program focused on Python programming and Artificial Intelligence concepts.",
+  },
+  {
     type: "Internship",
     icon: <FaBriefcase />,
-    title: "Web Development & AI Intern",
-    organization: "Tech Innovation Labs",
-    duration: "June 2024 – August 2024",
-    description: "Built responsive frontend UI components using React and Tailwind CSS. Developed Python backend microservices for AI text parsing and integrated REST API endpoints.",
+    title: "Full Stack Development Intern",
+    organization: "CSK Academy, Salem, Tamil Nadu",
+    duration: "Jul 2024",
+    description: "Developed full stack applications utilizing both frontend and backend technologies.",
   },
   {
-    type: "College Projects",
-    icon: <FaGraduationCap />,
-    title: "College Bus Management System",
-    organization: "Nehru Institute of Information Technology",
-    duration: "January 2024 – April 2024",
-    description: "Engineered an enterprise fleet management and student registration system using Java, MySQL, HTML, and CSS. Optimized route scheduling queries for over 1,200 students.",
-  },
-  {
-    type: "Personal Projects",
-    icon: <FaCode />,
-    title: "Full Stack & AI Web Applications",
-    organization: "Independent Development",
-    duration: "2023 – Present",
-    description: "Designed and deployed multiple production-ready full-stack applications including Clinic Booking Portals and RAG Document Search engines using the MERN stack and Python.",
+    type: "Internship",
+    icon: <FaBriefcase />,
+    title: "Web Development Intern",
+    organization: "Odugaa Tech, Salem, Tamil Nadu",
+    duration: "Aug 2023",
+    description: "Worked on web development projects, gaining hands-on experience in building and deploying web applications.",
   },
 ];
 

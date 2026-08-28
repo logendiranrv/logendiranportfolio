@@ -3,21 +3,22 @@ import {
   FaReact, 
   FaNodeJs, 
   FaPython, 
+  FaJava,
   FaJs, 
-  FaCss3Alt, 
-  FaFigma 
+  FaGitAlt 
 } from 'react-icons/fa';
-import { SiExpress, SiMongodb } from 'react-icons/si';
+import { SiExpress, SiMongodb, SiMysql } from 'react-icons/si';
 
 const techBadgesList = [
-  { icon: <FaFigma className="tech-icon figma" />, label: 'Figma' },
-  { icon: <FaReact className="tech-icon react" />, label: 'React' },
+  { icon: <FaJava className="tech-icon java" />, label: 'Java' },
   { icon: <FaPython className="tech-icon python" />, label: 'Python' },
+  { icon: <FaReact className="tech-icon react" />, label: 'React JS' },
+  { icon: <FaJs className="tech-icon js" />, label: 'JavaScript' },
   { icon: <FaNodeJs className="tech-icon node" />, label: 'Node.js' },
   { icon: <SiExpress className="tech-icon express" />, label: 'Express' },
-  { icon: <FaJs className="tech-icon js" />, label: 'JS' },
-  { icon: <FaCss3Alt className="tech-icon css" />, label: 'CSS' },
+  { icon: <SiMysql className="tech-icon mysql" />, label: 'MySQL' },
   { icon: <SiMongodb className="tech-icon mongo" />, label: 'MongoDB' },
+  { icon: <FaGitAlt className="tech-icon git" />, label: 'Git' },
 ];
 
 const About = () => {
@@ -27,12 +28,12 @@ const About = () => {
         
         {/* Section Header */}
         <h2 className="gradient-heading-title" data-aos="fade-up">
-          About
+          About Me
         </h2>
 
         {/* Bio Paragraph */}
         <p className="anurag-about-text" data-aos="fade-up">
-          I'm a full stack developer looking for exciting engineering opportunities. I focus on writing clean, accessible code using modern web practices in React, Node.js, Express, MongoDB, and Python. Based in India, I'm enthusiastic about building scalable web applications and remote software products.
+          I am a motivated and enthusiastic fresher in Computer Applications (MCA) looking to kickstart my career in a dynamic organization that encourages learning and professional growth. I possess strong programming skills in Java, Python, HTML, CSS, JavaScript, React JS, MySQL, and MongoDB. Based in Tamil Nadu, India, I am passionate about problem-solving, software engineering, and teamwork.
         </p>
 
         {/* Connected Tech Stack Tree Node */}

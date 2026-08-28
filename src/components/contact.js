@@ -37,7 +37,7 @@ const Contact = () => {
                 <div className="contact-icon-bubble">
                   <FaPhoneAlt />
                 </div>
-                <span>+91 9042978939</span>
+                <span>+91 6383121749</span>
               </div>
 
               <div className="contact-item">

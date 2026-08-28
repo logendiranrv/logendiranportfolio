@@ -5,27 +5,19 @@ import { supabase } from '../supabaseClient';
 const fallbackProjects = [
   {
     title: "College Bus Management System",
-    description: "A web app for automated fleet and route scheduling. View live routes, driver details, and student assignments with seamless interactive controls.",
-    technologies: ["React", "Node.js", "MySQL", "Tailwind CSS"],
+    description: "Developed a system to manage college bus operations, enabling streamlined scheduling, route management, and student tracking.",
+    technologies: ["HTML", "CSS", "Java", "MySQL"],
     github: "https://github.com/logendiranrv",
     demo: "https://github.com/logendiranrv",
     image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80"
   },
   {
-    title: "Clinic Booking & Healthcare Engine",
-    description: "Digital patient appointment web application with real-time schedule locks, doctor queue management, and instant notifications.",
-    technologies: ["React", "Express", "MongoDB", "Node.js"],
+    title: "Clinic Appointment Booking System",
+    description: "Built a responsive clinic appointment booking web application enabling patients to schedule, reschedule, and cancel appointments online. Features doctor availability management and patient dashboard.",
+    technologies: ["React JS", "JavaScript", "CSS", "MongoDB"],
     github: "https://github.com/logendiranrv",
     demo: "https://github.com/logendiranrv",
     image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80"
-  },
-  {
-    title: "AI Document Intelligence & RAG System",
-    description: "Vector search engine enabling users to query complex PDFs and documents using natural language embeddings and fast retrieval.",
-    technologies: ["Python", "FastAPI", "React", "LangChain"],
-    github: "https://github.com/logendiranrv",
-    demo: "https://github.com/logendiranrv",
-    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80"
   }
 ];
 

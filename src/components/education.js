@@ -4,21 +4,21 @@ import { supabase } from '../supabaseClient';
 
 const fallbackEducation = [
   {
-    degree: 'Master of Computer Application',
+    degree: 'Master of Computer Application (MCA)',
     institution: 'Nehru Institute of Information Technology and Management, Coimbatore, Tamil Nadu',
     year: 'May 2027',
-    description: 'Currently pursuing'
+    description: 'Pursuing'
   },
   {
-    degree: 'Bachelor of Computer Application',
+    degree: 'Bachelor of Computer Application (BCA)',
     institution: 'AVS College of Arts and Science, Salem, Tamil Nadu',
     year: 'Apr 2025',
     description: 'CGPA: 7.3 / 10'
   },
   {
-    degree: 'XII (Higher Secondary)',
-    institution: 'Sri Jothi Higher Secondary School, Tharamangalam, Salem, Tamil Nadu',
-    year: '',
+    degree: 'Higher Secondary (XII)',
+    institution: 'Srii Jothi Higher Secondary School, Tharamangalam, Salem, Tamil Nadu',
+    year: 'May 2022',
     description: 'Percentage: 78.83%'
   }
 ];

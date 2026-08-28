@@ -31,7 +31,7 @@ const Footer = () => {
               <FaTwitter />
             </a>
             <a
-              href="https://linkedin.com"
+              href="https://linkedin.com/in/logendiran-r-24567a295"
               target="_blank"
               rel="noopener noreferrer"
               className="footer-social-link"

@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaDownload } from 'react-icons/fa';
 
 const Hero = () => {
   return (
@@ -17,16 +18,25 @@ const Hero = () => {
             </h1>
 
             <h2 className="anurag-hero-subtitle">
-              Full-Stack Developer.
+              Full-Stack Developer
             </h2>
 
             <p className="anurag-hero-bio">
-              A full stack developer building responsive and user-friendly web applications & apps. I focus on clean code and efficient design, ensuring seamless interactions that align with both user expectations and business objectives.
+              Motivated and enthusiastic MCA graduate & Full-Stack Developer with strong programming skills in Java, Python, React JS, Node.js, and web technologies. Passionate about problem-solving, building responsive applications, and contributing positively to engineering teams.
             </p>
 
-            <div className="anurag-cta-row">
+            <div className="anurag-cta-row" style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
               <a href="#contact" className="anurag-pill-btn">
                 Contact
+              </a>
+              <a 
+                href="/resume.pdf" 
+                download="Logendiran_R_Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="anurag-pill-btn-outline"
+              >
+                <FaDownload style={{ marginRight: '0.4rem' }} /> Download Resume
               </a>
             </div>
 
