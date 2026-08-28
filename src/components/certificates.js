@@ -5,36 +5,28 @@ import { supabase } from '../supabaseClient';
 const fallbackCertificates = [
   {
     id: 1,
-    name: "Full Stack Web Development Internship",
-    issuer: "Tech Innovation Labs",
-    issue_date: "2024",
-    credential_url: "https://github.com/logendiranrv",
-    image_url: "https://images.unsplash.com/photo-1589330694653-aded6f786572?auto=format&fit=crop&w=600&q=80"
+    name: "Python with AI Training Certificate",
+    issuer: "CSK Academy, Salem",
+    issue_date: "Dec 2024",
+    credential_url: "",
+    image_url: ""
   },
   {
     id: 2,
-    name: "React.js & Modern Web Architecture",
-    issuer: "Web Learning Platform",
-    issue_date: "2024",
-    credential_url: "https://github.com/logendiranrv",
-    image_url: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=600&q=80"
+    name: "Full Stack Development Internship",
+    issuer: "CSK Academy, Salem",
+    issue_date: "Jul 2024",
+    credential_url: "",
+    image_url: ""
   },
   {
     id: 3,
-    name: "Python Programming & AI Foundations",
-    issuer: "AI Technology Academy",
-    issue_date: "2023",
-    credential_url: "https://github.com/logendiranrv",
-    image_url: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=600&q=80"
-  },
-  {
-    id: 4,
-    name: "Database Management & SQL Systems",
-    issuer: "Computer Application Academy",
-    issue_date: "2023",
-    credential_url: "https://github.com/logendiranrv",
-    image_url: "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?auto=format&fit=crop&w=600&q=80"
-  },
+    name: "Web Development Internship",
+    issuer: "Odugaa Tech, Salem",
+    issue_date: "Aug 2023",
+    credential_url: "",
+    image_url: ""
+  }
 ];
 
 const Certificates = () => {
