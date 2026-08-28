@@ -5,27 +5,43 @@ import { supabase } from '../supabaseClient';
 const fallbackCertificates = [
   {
     id: 1,
-    name: "Python with AI Training Certificate",
-    issuer: "CSK Academy, Salem",
-    issue_date: "Dec 2024",
-    credential_url: "",
-    image_url: ""
+    name: "MERN Stack Development Internship",
+    issuer: "AK Technologies, Coimbatore",
+    issue_date: "Mar 2026",
+    credential_url: "/certificates/pdf/cert_ak_tech.pdf",
+    image_url: "/certificates/cert_ak_tech.jpg"
   },
   {
     id: 2,
-    name: "Full Stack Development Internship",
-    issuer: "CSK Academy, Salem",
-    issue_date: "Jul 2024",
+    name: "Generative AI Value Added Programme",
+    issuer: "Nehru Institute of Info Tech & Management",
+    issue_date: "Mar 2026",
     credential_url: "",
-    image_url: ""
+    image_url: "/certificates/cert_generative_ai.jpg"
   },
   {
     id: 3,
+    name: "Systems and Usable Security",
+    issuer: "NPTEL (MoE, Govt. of India / IIT)",
+    issue_date: "Feb 2026",
+    credential_url: "/certificates/pdf/cert_nptel_security.pdf",
+    image_url: "/certificates/cert_nptel_security.jpg"
+  },
+  {
+    id: 4,
+    name: "Cognito Innoverse-25 (UI/UX Redesign)",
+    issuer: "Sri Ramakrishna College of Arts & Science",
+    issue_date: "Dec 2025",
+    credential_url: "/certificates/pdf/cert_cognito_uiux.pdf",
+    image_url: "/certificates/cert_cognito_uiux.jpg"
+  },
+  {
+    id: 5,
     name: "Web Development Internship",
-    issuer: "Odugaa Tech, Salem",
-    issue_date: "Aug 2023",
+    issuer: "Odugaa Tech Pvt. Ltd",
+    issue_date: "Jun 2024",
     credential_url: "",
-    image_url: ""
+    image_url: "/certificates/cert_odugaa_webdev.jpg"
   }
 ];
 
@@ -63,7 +79,7 @@ const Certificates = () => {
           <span className="section-label">05. CREDENTIALS</span>
           <h2 className="section-title-minimal">Certifications & Training</h2>
           <p className="section-desc-minimal">
-            Verified certifications and technical training completed during my software engineering journey.
+            Verified certifications and technical training completed during my MCA and software development journey.
           </p>
         </div>
 
@@ -87,9 +103,14 @@ const Certificates = () => {
                     src={cert.image_url} 
                     alt={cert.name} 
                     className="cert-img"
+                    onContextMenu={(e) => e.preventDefault()}
+                    onDragStart={(e) => e.preventDefault()}
+                    style={{ userSelect: 'none', WebkitUserSelect: 'none' }}
                     onError={(e) => {
                       e.target.style.display = 'none';
-                      e.target.nextSibling.style.display = 'flex';
+                      if (e.target.nextSibling) {
+                        e.target.nextSibling.style.display = 'flex';
+                      }
                     }}
                   />
                 ) : null}
@@ -161,6 +182,9 @@ const Certificates = () => {
                     src={selectedCert.image_url} 
                     alt={selectedCert.name} 
                     className="cert-modal-img" 
+                    onContextMenu={(e) => e.preventDefault()}
+                    onDragStart={(e) => e.preventDefault()}
+                    style={{ userSelect: 'none', WebkitUserSelect: 'none' }}
                   />
                 ) : (
                   <div className="cert-modal-no-img">No Preview Image Available</div>
@@ -175,7 +199,7 @@ const Certificates = () => {
                     rel="noopener noreferrer"
                     className="btn-cert-link"
                   >
-                    Open Credential Link <FaExternalLinkAlt />
+                    Open Official PDF <FaExternalLinkAlt />
                   </a>
                 )}
               </div>
