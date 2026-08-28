@@ -1,5 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { FaAward, FaExternalLinkAlt, FaTimes, FaImage } from 'react-icons/fa';
+import React, { useState, useEffect, useRef } from 'react';
+import { 
+  FaAward, 
+  FaExternalLinkAlt, 
+  FaTimes, 
+  FaImage,
+  FaChevronLeft,
+  FaChevronRight,
+  FaPause,
+  FaPlay
+} from 'react-icons/fa';
 import { supabase } from '../supabaseClient';
 
 const fallbackCertificates = [
@@ -46,8 +55,8 @@ const fallbackCertificates = [
 ];
 
 const Certificates = () => {
-  const [certs, setCerts] = useState([]);
-  const [selectedCert, setSelectedCert] = useState(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const marqueeRef = useRef(null);
 
   useEffect(() => {
     const fetchCertificates = async () => {
@@ -70,91 +79,134 @@ const Certificates = () => {
     fetchCertificates();
   }, []);
 
+  // Double certificates array for infinite smooth marquee track
+  const displayCerts = certs.length > 0 ? [...certs, ...certs] : [...fallbackCertificates, ...fallbackCertificates];
+
+  const scrollTrack = (direction) => {
+    if (marqueeRef.current) {
+      const scrollAmount = direction === 'left' ? -360 : 360;
+      marqueeRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
+
   return (
     <section id="certifications" className="certifications-minimal-section">
       <div className="container">
         
-        {/* Section Header */}
-        <div className="section-header-minimal" data-aos="fade-up">
-          <span className="section-label">05. CREDENTIALS</span>
-          <h2 className="section-title-minimal">Certifications & Training</h2>
-          <p className="section-desc-minimal">
-            Verified certifications and technical training completed during my MCA and software development journey.
-          </p>
+        {/* Section Header & Controls */}
+        <div className="cert-controls-wrapper" data-aos="fade-up">
+          <div className="section-header-minimal" style={{ marginBottom: 0 }}>
+            <span className="section-label">05. CREDENTIALS</span>
+            <h2 className="section-title-minimal">Certifications & Training</h2>
+            <p className="section-desc-minimal">
+              Verified certifications and technical training completed during my MCA and software development journey.
+            </p>
+          </div>
+
+          <div className="cert-nav-buttons">
+            <button 
+              className="cert-nav-btn"
+              onClick={() => setIsPaused(!isPaused)}
+              title={isPaused ? "Resume Auto Scroll" : "Pause Auto Scroll"}
+            >
+              {isPaused ? <FaPlay size={14} /> : <FaPause size={14} />}
+            </button>
+            <button 
+              className="cert-nav-btn"
+              onClick={() => scrollTrack('left')}
+              title="Scroll Left"
+            >
+              <FaChevronLeft size={16} />
+            </button>
+            <button 
+              className="cert-nav-btn"
+              onClick={() => scrollTrack('right')}
+              title="Scroll Right"
+            >
+              <FaChevronRight size={16} />
+            </button>
+          </div>
         </div>
 
-        {/* Certifications Responsive Grid */}
-        <div className="cert-grid-minimal">
-          {certs.map((cert, idx) => (
-            <div
-              key={idx}
-              className="cert-card-minimal"
-              data-aos="fade-up"
-              data-aos-delay={idx * 80}
-            >
-              {/* Certificate Image Banner */}
-              <div 
-                className="cert-img-wrapper"
+        {/* Certifications Infinite Running Marquee Track */}
+        <div className="cert-marquee-container" data-aos="fade-up">
+          <div 
+            ref={marqueeRef}
+            className={`cert-marquee-track ${isPaused ? 'is-paused' : ''}`}
+          >
+            {displayCerts.map((cert, idx) => (
+              <div
+                key={idx}
+                className="cert-card-touchable"
                 onClick={() => setSelectedCert(cert)}
-                title="Click to expand Certificate"
               >
-                {cert.image_url ? (
-                  <img 
-                    src={cert.image_url} 
-                    alt={cert.name} 
-                    className="cert-img"
-                    onContextMenu={(e) => e.preventDefault()}
-                    onDragStart={(e) => e.preventDefault()}
-                    style={{ userSelect: 'none', WebkitUserSelect: 'none' }}
-                    onError={(e) => {
-                      e.target.style.display = 'none';
-                      if (e.target.nextSibling) {
-                        e.target.nextSibling.style.display = 'flex';
-                      }
-                    }}
-                  />
-                ) : null}
-                <div 
-                  className="cert-img-placeholder"
-                  style={{ display: cert.image_url ? 'none' : 'flex' }}
-                >
-                  <FaImage />
+                {/* Certificate Image Banner */}
+                <div className="cert-img-wrapper">
+                  {cert.image_url ? (
+                    <img 
+                      src={cert.image_url} 
+                      alt={cert.name} 
+                      className="cert-img"
+                      onContextMenu={(e) => e.preventDefault()}
+                      onDragStart={(e) => e.preventDefault()}
+                      style={{ userSelect: 'none', WebkitUserSelect: 'none' }}
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        if (e.target.nextSibling) {
+                          e.target.nextSibling.style.display = 'flex';
+                        }
+                      }}
+                    />
+                  ) : null}
+                  <div 
+                    className="cert-img-placeholder"
+                    style={{ display: cert.image_url ? 'none' : 'flex' }}
+                  >
+                    <FaImage />
+                  </div>
+                  
+                  {/* Hover Expand Overlay */}
+                  <div className="cert-img-overlay-hover">
+                    <span className="cert-expand-pill">
+                      <FaImage /> Click to View
+                    </span>
+                  </div>
                 </div>
+
+                <div className="cert-card-content">
+                  <div className="cert-card-top">
+                    <FaAward className="cert-badge-icon" />
+                    <span className="cert-year-pill">{cert.issue_date || cert.year}</span>
+                  </div>
+
+                  <h3 className="cert-title-minimal">{cert.name}</h3>
+                  <div className="cert-org-minimal">{cert.issuer || cert.organization}</div>
+
+                  <div className="cert-actions-row" onClick={(e) => e.stopPropagation()}>
+                    {cert.credential_url && (
+                      <a
+                        href={cert.credential_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-cert-link"
+                      >
+                        View PDF <FaExternalLinkAlt />
+                      </a>
+                    )}
+                    {cert.image_url && (
+                      <button 
+                        onClick={() => setSelectedCert(cert)}
+                        className="btn-cert-preview"
+                      >
+                        Preview Image
+                      </button>
+                    )}
+                  </div>
+                </div>
+
               </div>
-
-              <div className="cert-card-content">
-                <div className="cert-card-top">
-                  <FaAward className="cert-badge-icon" />
-                  <span className="cert-year-pill">{cert.issue_date || cert.year}</span>
-                </div>
-
-                <h3 className="cert-title-minimal">{cert.name}</h3>
-                <div className="cert-org-minimal">{cert.issuer || cert.organization}</div>
-
-                <div className="cert-actions-row">
-                  {cert.credential_url && (
-                    <a
-                      href={cert.credential_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-cert-link"
-                    >
-                      View Certificate <FaExternalLinkAlt />
-                    </a>
-                  )}
-                  {cert.image_url && (
-                    <button 
-                      onClick={() => setSelectedCert(cert)}
-                      className="btn-cert-preview"
-                    >
-                      Preview Image
-                    </button>
-                  )}
-                </div>
-              </div>
-
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         {/* Certificate Image Lightbox Modal */}
